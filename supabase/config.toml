@@ -1,0 +1,4 @@
+project_id = "utrpgteimewibjfodozu"
+
+[functions.solve-question]
+verify_jwt = false
