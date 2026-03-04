@@ -1,5 +1,8 @@
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
+import "katex/dist/katex.min.css";
 import { Loader2 } from "lucide-react";
 
 interface SolutionDisplayProps {
@@ -19,7 +22,7 @@ export function SolutionDisplay({ content, isStreaming }: SolutionDisplayProps) 
 
   return (
     <div className="solution-content">
-      <ReactMarkdown remarkPlugins={[remarkGfm]}>
+      <ReactMarkdown remarkPlugins={[remarkGfm, remarkMath]} rehypePlugins={[rehypeKatex]}>
         {content}
       </ReactMarkdown>
       {isStreaming && (
