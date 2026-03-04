@@ -1,5 +1,6 @@
 import { useState, useCallback, useEffect } from "react";
-import { Send, RotateCcw, Sparkles, GraduationCap } from "lucide-react";
+import { Send, RotateCcw, Sparkles, GraduationCap, Calculator } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
@@ -95,10 +96,15 @@ const Index = () => {
           <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: "var(--solve-gradient)" }}>
             <GraduationCap className="w-5 h-5 text-white" />
           </div>
-          <div>
+          <div className="flex-1">
             <h1 className="text-lg font-bold leading-tight">SolveIt</h1>
             <p className="text-xs text-muted-foreground">AI Homework Helper</p>
           </div>
+          <Link to="/marks-calculator">
+            <Button variant="outline" size="sm" className="gap-1.5 text-xs">
+              <Calculator className="w-3.5 h-3.5" /> Marks Calc
+            </Button>
+          </Link>
         </div>
       </header>
 
