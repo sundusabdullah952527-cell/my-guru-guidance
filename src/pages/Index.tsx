@@ -10,6 +10,7 @@ import { ImageUpload } from "@/components/ImageUpload";
 import { SolutionDisplay } from "@/components/SolutionDisplay";
 import { HistorySidebar, HistoryItem } from "@/components/HistorySidebar";
 import { streamSolution } from "@/lib/stream-chat";
+import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
 const HISTORY_KEY = "solveit-history";
@@ -57,6 +58,13 @@ const Index = () => {
       },
       onDone: () => {
         setIsStreaming(false);
+        // Log question for analytics
+        supabase.from("questions_log").insert({
+          question: question || null,
+          subject,
+          level,
+          has_image: !!image,
+        }).then();
         const newItem: HistoryItem = {
           id: Date.now().toString(),
           question: question || "Image question",
