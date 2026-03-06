@@ -123,13 +123,7 @@ const Index = () => {
             <h1 className="text-lg font-bold leading-tight">SolveIt</h1>
             <p className="text-xs text-muted-foreground">AI Homework Helper</p>
           </div>
-          {isAdmin && (
-            <Link to="/admin">
-              <Button variant="outline" size="sm" className="gap-1.5 text-xs">
-                <Shield className="w-3.5 h-3.5" /> Admin
-              </Button>
-            </Link>
-          )}
+          
           <Link to="/marks-calculator">
             <Button variant="outline" size="sm" className="gap-1.5 text-xs">
               <Calculator className="w-3.5 h-3.5" /> Marks Calc
