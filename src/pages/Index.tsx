@@ -1,6 +1,7 @@
 import { useState, useCallback, useEffect } from "react";
-import { Send, RotateCcw, Sparkles, GraduationCap, Calculator } from "lucide-react";
+import { Send, RotateCcw, Sparkles, GraduationCap, Calculator, Shield } from "lucide-react";
 import { Link } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
@@ -10,7 +11,6 @@ import { ImageUpload } from "@/components/ImageUpload";
 import { SolutionDisplay } from "@/components/SolutionDisplay";
 import { HistorySidebar, HistoryItem } from "@/components/HistorySidebar";
 import { streamSolution } from "@/lib/stream-chat";
-import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
 const HISTORY_KEY = "solveit-history";
@@ -34,9 +34,24 @@ const Index = () => {
   const [isStreaming, setIsStreaming] = useState(false);
   const [showSolution, setShowSolution] = useState(false);
   const [history, setHistory] = useState<HistoryItem[]>(loadHistory);
+  const [isAdmin, setIsAdmin] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => { saveHistory(history); }, [history]);
+
+  useEffect(() => {
+    const checkAdmin = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) return;
+      const { data } = await supabase
+        .from("user_roles")
+        .select("role")
+        .eq("user_id", session.user.id)
+        .eq("role", "admin");
+      setIsAdmin(!!(data && data.length > 0));
+    };
+    checkAdmin();
+  }, []);
 
   const handleSolve = useCallback(async () => {
     if (!question.trim() && !image) {
@@ -108,6 +123,13 @@ const Index = () => {
             <h1 className="text-lg font-bold leading-tight">SolveIt</h1>
             <p className="text-xs text-muted-foreground">AI Homework Helper</p>
           </div>
+          {isAdmin && (
+            <Link to="/admin">
+              <Button variant="outline" size="sm" className="gap-1.5 text-xs">
+                <Shield className="w-3.5 h-3.5" /> Admin
+              </Button>
+            </Link>
+          )}
           <Link to="/marks-calculator">
             <Button variant="outline" size="sm" className="gap-1.5 text-xs">
               <Calculator className="w-3.5 h-3.5" /> Marks Calc
