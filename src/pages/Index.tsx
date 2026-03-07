@@ -36,24 +36,9 @@ const Index = () => {
   const [isStreaming, setIsStreaming] = useState(false);
   const [showSolution, setShowSolution] = useState(false);
   const [history, setHistory] = useState<HistoryItem[]>(loadHistory);
-  const [isAdmin, setIsAdmin] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => { saveHistory(history); }, [history]);
-
-  useEffect(() => {
-    const checkAdmin = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) return;
-      const { data } = await supabase
-        .from("user_roles")
-        .select("role")
-        .eq("user_id", session.user.id)
-        .eq("role", "admin");
-      setIsAdmin(!!(data && data.length > 0));
-    };
-    checkAdmin();
-  }, []);
 
   const handleSolve = useCallback(async () => {
     if (!question.trim() && !image) {
