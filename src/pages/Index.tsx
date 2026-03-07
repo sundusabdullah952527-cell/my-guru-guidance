@@ -1,5 +1,7 @@
 import { useState, useCallback, useEffect } from "react";
-import { Send, RotateCcw, Sparkles, GraduationCap, Calculator, Shield } from "lucide-react";
+import { Send, RotateCcw, Sparkles, GraduationCap, Calculator } from "lucide-react";
+import { AdSlot } from "@/components/AdSlot";
+import { SiteContent } from "@/components/SiteContent";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -34,24 +36,9 @@ const Index = () => {
   const [isStreaming, setIsStreaming] = useState(false);
   const [showSolution, setShowSolution] = useState(false);
   const [history, setHistory] = useState<HistoryItem[]>(loadHistory);
-  const [isAdmin, setIsAdmin] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => { saveHistory(history); }, [history]);
-
-  useEffect(() => {
-    const checkAdmin = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) return;
-      const { data } = await supabase
-        .from("user_roles")
-        .select("role")
-        .eq("user_id", session.user.id)
-        .eq("role", "admin");
-      setIsAdmin(!!(data && data.length > 0));
-    };
-    checkAdmin();
-  }, []);
 
   const handleSolve = useCallback(async () => {
     if (!question.trim() && !image) {
@@ -113,6 +100,9 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      {/* Header Ad */}
+      <AdSlot slot="ad_header" className="w-full" />
+
       {/* Header */}
       <header className="sticky top-0 z-10 bg-background/80 backdrop-blur-lg border-b border-border">
         <div className="max-w-2xl mx-auto px-4 py-3 flex items-center gap-3">
@@ -133,6 +123,9 @@ const Index = () => {
       </header>
 
       <main className="max-w-2xl mx-auto px-4 py-6 space-y-5">
+        {/* Latest News */}
+        <SiteContent contentKey="content_news" />
+
         {!showSolution ? (
           <>
             {/* Hero */}
@@ -148,6 +141,12 @@ const Index = () => {
                 Type your question or snap a photo — get a detailed solution instantly
               </p>
             </div>
+
+            {/* App Features */}
+            <SiteContent contentKey="content_features" />
+
+            {/* Sidebar Ad */}
+            <AdSlot slot="ad_sidebar" className="w-full" />
 
             {/* Input Card */}
             <Card className="shadow-lg border-border/60">
@@ -218,6 +217,9 @@ const Index = () => {
             </Card>
           </>
         )}
+
+        {/* Footer Ad */}
+        <AdSlot slot="ad_footer" className="w-full mt-6" />
       </main>
     </div>
   );
