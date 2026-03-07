@@ -138,6 +138,9 @@ const Index = () => {
       </header>
 
       <main className="max-w-2xl mx-auto px-4 py-6 space-y-5">
+        {/* Latest News */}
+        <SiteContent contentKey="content_news" />
+
         {!showSolution ? (
           <>
             {/* Hero */}
@@ -153,6 +156,12 @@ const Index = () => {
                 Type your question or snap a photo — get a detailed solution instantly
               </p>
             </div>
+
+            {/* App Features */}
+            <SiteContent contentKey="content_features" />
+
+            {/* Sidebar Ad */}
+            <AdSlot slot="ad_sidebar" className="w-full" />
 
             {/* Input Card */}
             <Card className="shadow-lg border-border/60">
