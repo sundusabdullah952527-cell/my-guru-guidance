@@ -115,6 +115,9 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      {/* Header Ad */}
+      <AdSlot slot="ad_header" className="w-full" />
+
       {/* Header */}
       <header className="sticky top-0 z-10 bg-background/80 backdrop-blur-lg border-b border-border">
         <div className="max-w-2xl mx-auto px-4 py-3 flex items-center gap-3">
