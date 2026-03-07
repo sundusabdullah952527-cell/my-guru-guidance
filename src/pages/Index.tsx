@@ -232,6 +232,9 @@ const Index = () => {
             </Card>
           </>
         )}
+
+        {/* Footer Ad */}
+        <AdSlot slot="ad_footer" className="w-full mt-6" />
       </main>
     </div>
   );
