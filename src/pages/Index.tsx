@@ -1,5 +1,7 @@
 import { useState, useCallback, useEffect } from "react";
-import { Send, RotateCcw, Sparkles, GraduationCap, Calculator, Shield } from "lucide-react";
+import { Send, RotateCcw, Sparkles, GraduationCap, Calculator } from "lucide-react";
+import { AdSlot } from "@/components/AdSlot";
+import { SiteContent } from "@/components/SiteContent";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
